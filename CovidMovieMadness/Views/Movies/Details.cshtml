@@ -1,0 +1,140 @@
+﻿@model CovidMovieMadness.ViewModels.MovieDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+<h4>Movie</h4>
+<hr />
+<dl class="dl-horizontal">
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Genre)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Genre)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Year)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Year)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.AvgRating)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.AvgRating)
+    </dd>
+</dl>
+<hr />
+@if (Model.PostId != 0)
+{
+    <h4>Post</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostText)
+        </dd>
+
+    </dl>
+    <p></p>
+    <p>
+        @Html.ActionLink("Edit post", "EditPost", new { id = Model.PostId}) |
+        @Html.ActionLink("Delete post", "DeletePost", new { id = Model.PostId }) |
+        @Html.ActionLink("View Comments", "ShowComments", new { id = Model.PostId })
+    </p>
+}
+else
+{
+    <h4><i>No one has written a post here yet</i></h4>
+    <p>
+        @Html.ActionLink("Create post", "CreatePost", new { id = Model.MovieId })
+    </p>
+}
+<p></p>
+<hr />
+
+    @if (Model.Comments.Count != 0)
+    {
+        <h4>Comments</h4>
+
+        foreach (var item in Model.Comments)
+        {
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(modelItem => item.CommentText)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelItem => item.CommentText)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(modelItem => item.UserRating)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelItem => item.UserRating)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(modelItem => item.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </dd>
+            </dl>
+
+            <td>
+                @Html.ActionLink("Edit comment", "EditComment", new { id = item.Id }) |
+                @Html.ActionLink("Delete comment", "DeleteComment", new { id = item.Id })
+
+            </td>
+
+        }
+            <p>
+
+            </p>
+            <p>
+                @Html.ActionLink("Write new comment", "CreateComment", new { id = Model.PostId })
+
+            </p>
+
+    }
+
+    else
+    {
+    <h4><i>No one has written a comment on this post</i></h4>
+    @Html.ActionLink("Write new comment", "CreateComment", new { id = Model.PostId })
+
+    }
+
+    <p></p>
+    <hr />
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
